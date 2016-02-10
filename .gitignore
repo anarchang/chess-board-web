@@ -1,2 +1,7 @@
 bin
 node_modules
+pkg
+*.DS_Store
+src/github.com/gorilla
+src/github.com/jinzhu
+src/github.com/lib
