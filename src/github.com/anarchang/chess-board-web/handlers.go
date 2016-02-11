@@ -61,4 +61,7 @@ func PieceUpdate(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewEncoder(w).Encode(t); err != nil {
 		fmt.Println(err)
 	}
+
+	// let the other clients know which piece was updated
+	h.broadcast <- []byte(pieceId)
 }

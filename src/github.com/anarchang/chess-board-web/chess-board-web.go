@@ -30,9 +30,10 @@ func main() {
 	var pieces Pieces
 	DB.Find(&pieces)
 	log.Println(pieces)
+	go h.run()
 
 	router := NewRouter()
-
+	router.HandleFunc("/ws", WebsocketHandler)
 	router.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("build/"))))
 
 	log.Println("Listening at port 3000")
