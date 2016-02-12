@@ -8,6 +8,15 @@ import (
 	_ "github.com/lib/pq"
 )
 
+func initializeDatabase(db gorm.DB) {
+	db.CreateTable(&Piece{})
+	db.Set("gorm:taple_operations", "ENGINE=InnoDB").CreateTable(&Piece{})
+
+	piece := Piece{Type: WhiteQueen, Top: 100, Left: 100}
+	db.NewRecord(piece)
+	db.Create(&piece)
+}
+
 var DB gorm.DB
 
 func main() {
@@ -20,12 +29,8 @@ func main() {
 
 	// Disable table name's pluralization
 	DB.SingularTable(true)
-	DB.CreateTable(&Piece{})
-	DB.Set("gorm:taple_operations", "ENGINE=InnoDB").CreateTable(&Piece{})
 
-	piece := Piece{Type: WhiteQueen, Top: 100, Left: 100}
-	DB.NewRecord(piece)
-	DB.Create(&piece)
+	initializeDatabase(DB)
 
 	var pieces Pieces
 	DB.Find(&pieces)
