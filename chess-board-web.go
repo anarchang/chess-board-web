@@ -12,7 +12,7 @@ var DB gorm.DB
 
 func main() {
 	var err error
-	DB, err = gorm.Open("postgres", "user=anachang dbname=chess_game sslmode=disable")
+	DB, err = gorm.Open("postgres", "user=postgres dbname=chess_game sslmode=disable")
 	if err != nil {
 		log.Println(err)
 	}
@@ -20,12 +20,12 @@ func main() {
 
 	// Disable table name's pluralization
 	DB.SingularTable(true)
-	// db.CreateTable(&Piece{})
-	// db.Set("gorm:taple_operations", "ENGINE=InnoDB").CreateTable(&Piece{})
+	DB.CreateTable(&Piece{})
+	DB.Set("gorm:taple_operations", "ENGINE=InnoDB").CreateTable(&Piece{})
 
-	// piece := Piece{Type: WhiteQueen, Top: 100, Left: 100}
-	// db.NewRecord(piece)
-	// db.Create(&piece)
+	piece := Piece{Type: WhiteQueen, Top: 100, Left: 100}
+	DB.NewRecord(piece)
+	DB.Create(&piece)
 
 	var pieces Pieces
 	DB.Find(&pieces)
@@ -36,6 +36,6 @@ func main() {
 	router.HandleFunc("/ws", WebsocketHandler)
 	router.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("build/"))))
 
-	log.Println("Listening at port 3000")
-	http.ListenAndServe(":3000", router)
+	log.Println("Listening at port 8080")
+	http.ListenAndServe(":8080", router)
 }
