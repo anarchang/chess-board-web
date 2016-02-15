@@ -21,7 +21,7 @@ var DB gorm.DB
 
 func main() {
 	var err error
-	DB, err = gorm.Open("postgres", "user=postgres dbname=chess_game sslmode=disable")
+	DB, err = gorm.Open("postgres", "user=webapp password=arequipe dbname=chess_game sslmode=disable")
 	if err != nil {
 		log.Println(err)
 	}
