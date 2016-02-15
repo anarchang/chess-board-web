@@ -30,7 +30,7 @@ func main() {
 	// Disable table name's pluralization
 	DB.SingularTable(true)
 
-	initializeDatabase(DB)
+	// initializeDatabase(DB)
 
 	var pieces Pieces
 	DB.Find(&pieces)
