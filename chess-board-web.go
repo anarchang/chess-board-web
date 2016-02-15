@@ -1,6 +1,8 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -20,6 +22,11 @@ func initializeDatabase(db gorm.DB) {
 var DB gorm.DB
 
 func main() {
+	// Flags
+	var initDB = flag.Bool("initDB", false, "Initialize the Database")
+	var port = flag.Int("port", 3000, "Port on which to run server")
+	flag.Parse()
+
 	var err error
 	DB, err = gorm.Open("postgres", "user=webapp password=arequipe dbname=chess_game sslmode=disable")
 	if err != nil {
@@ -30,7 +37,9 @@ func main() {
 	// Disable table name's pluralization
 	DB.SingularTable(true)
 
-	// initializeDatabase(DB)
+	if *initDB {
+		initializeDatabase(DB)
+	}
 
 	var pieces Pieces
 	DB.Find(&pieces)
@@ -41,6 +50,8 @@ func main() {
 	router.HandleFunc("/ws", WebsocketHandler)
 	router.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("build/"))))
 
-	log.Println("Listening at port 3000")
-	http.ListenAndServe(":3000", router)
+	log.Println("Listening at port", *port)
+	portStr := fmt.Sprintf(":%d", *port)
+	log.Println("Port: ", portStr)
+	http.ListenAndServe(portStr, router)
 }
