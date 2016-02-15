@@ -41,6 +41,6 @@ func main() {
 	router.HandleFunc("/ws", WebsocketHandler)
 	router.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("build/"))))
 
-	log.Println("Listening at port 8080")
-	http.ListenAndServe(":8080", router)
+	log.Println("Listening at port 3000")
+	http.ListenAndServe(":3000", router)
 }
