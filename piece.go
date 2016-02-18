@@ -12,7 +12,7 @@ const (
 	WhiteBishop
 	BlackBishop
 	WhiteKnight
-	BlackNight
+	BlackKnight
 	WhitePawn
 	BlackPawn
 )
