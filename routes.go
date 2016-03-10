@@ -30,4 +30,22 @@ var routes = Routes{
 		"/piece/{pieceId}",
 		PieceUpdate,
 	},
+	Route{
+		"PieceGridIndex",
+		"GET",
+		"/gridpiece",
+		PieceGridIndex,
+	},
+	Route{
+		"GridPieceShow",
+		"GET",
+		"/gridpiece/{pieceId}",
+		GridPieceShow,
+	},
+	Route{
+		"GridPieceUpdate",
+		"PUT",
+		"/gridpiece/{pieceId}",
+		GridPieceUpdate,
+	},
 }
